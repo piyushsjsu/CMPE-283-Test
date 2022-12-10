@@ -24,4 +24,24 @@ int main(int argc, char **argv)
 	__cpuid(&eax, &ebx, &ecx, &edx);
 	cycle_time = (unsigned long long) ebx << 32 | ecx;
 	printf("CPUID(0x4FFFFFFD), Total time in VMM : %llu cycles \n", cycle_time);
+	
+	unsigned int temp;
+	    printf("\n-------------------------------------(0x4FFFFFFE)------------------------------------------------\n\n");
+    for (int i = 0; i < 75; i++) {
+        eax = 0x4FFFFFFE;
+        ecx = i;
+        temp = ecx;
+        __cpuid(&eax, &ebx, &ecx, &edx);
+        printf("CPUID(0x4FFFFFFE), Exit no: %u --> Total Exits: %u \n", temp, eax);
+    }
+
+    printf("\n-------------------------------------(0x4FFFFFFF)------------------------------------------------\n\n");
+    for (int i = 0; i < 75; i++) {
+        eax = 0x4FFFFFFF;
+        ecx = i;
+        temp = ecx;
+        __cpuid(&eax, &ebx, &ecx, &edx);
+        cycle_time = (unsigned long long) ebx << 32 | ecx;
+        printf("CPUID(0x4FFFFFFF), Exit no: %u --> Total time in VMM: %llu \n", temp, cycle_time);
+    }
 }
